@@ -1,3 +1,4 @@
+// server.js
 import express from 'express';
 import router from './routers/router.js';
 import dotenv from 'dotenv';
@@ -6,19 +7,19 @@ import cors from 'cors';
 
 dotenv.config();
 const app = express();
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); // Parse JSON requests
+app.use(cors()); // Enable CORS
 
-app.use('/api', router);
+app.use('/api', router); // Route to get and send messages
 
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
     const uri = process.env.MONGO_URI;
-    await mongoose.connect(uri)
-  .then(() => console.log('MongoDB Atlas connected successfully'))
-  .catch(err => console.error('Error connecting to MongoDB Atlas:', err.message)); // connect to MongoDB first
+    await mongoose.connect(uri) // Connect to MongoDB
+      .then(() => console.log('MongoDB Atlas connected successfully'))
+      .catch(err => console.error('Error connecting to MongoDB Atlas:', err.message));
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

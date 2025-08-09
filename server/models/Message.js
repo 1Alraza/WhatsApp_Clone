@@ -19,6 +19,7 @@ const MessageSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
+// Auto-update updatedAt before saving
 MessageSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();

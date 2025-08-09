@@ -1,4 +1,3 @@
-// processPayloads.js
 import fs from 'fs/promises';
 import path from 'path';
 import { savePayload } from './savePayload.js';
@@ -8,7 +7,7 @@ dotenv.config();
 
 async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI); // Connect to MongoDB
     console.log('MongoDB connected');
   } catch (err) {
     console.error('MongoDB connection error:', err);
@@ -16,19 +15,19 @@ async function connectDB() {
 }
 
 async function processAllPayloads() {
-  const payloadDir = path.resolve('./payloads');
+  const payloadDir = path.resolve('./payloads'); // Directory containing payload JSON files
   try {
-    const files = await fs.readdir(payloadDir);
+    const files = await fs.readdir(payloadDir); // Get all files
 
     for (const file of files) {
-      if (file.endsWith('.json')) {
+      if (file.endsWith('.json')) { // Process only .json files
         console.log(`Processing file: ${file}`);
 
         const filePath = path.join(payloadDir, file);
-        const data = await fs.readFile(filePath, 'utf-8');
-        const payload = JSON.parse(data);
+        const data = await fs.readFile(filePath, 'utf-8'); // Read file content
+        const payload = JSON.parse(data); // Convert JSON to object
 
-        await savePayload(payload);
+        await savePayload(payload); // Save to DB
       }
     }
     console.log('Finished processing all payload files');
@@ -38,7 +37,7 @@ async function processAllPayloads() {
 }
 
 (async () => {
-  await connectDB();
-  await processAllPayloads();
-  mongoose.connection.close();
+  await connectDB(); // Connect to DB
+  await processAllPayloads(); // Process payloads
+  mongoose.connection.close(); // Close DB connection
 })();
