@@ -14,9 +14,11 @@ export default function App() {
 
   // Fetch conversations
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/messages`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages`)
       .then(res => {
         const data = res.data;
+        console.log("API Response:", res.data);
+
         const grouped = data.reduce((acc, msg) => {
           if (!acc[msg.wa_id]) acc[msg.wa_id] = [];
           acc[msg.wa_id].push(msg);
@@ -48,7 +50,7 @@ export default function App() {
       return;
     }
 
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/messages?wa_id=${selectedWaId}`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages?wa_id=${selectedWaId}`)
       .then(res => {
         const msgs = res.data.map(msg => ({
           ...msg,
@@ -71,7 +73,7 @@ export default function App() {
     const contactName = contact?.contactName || '';
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/send`, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/send`, {
         to: selectedWaId,
         text,
         contactName,

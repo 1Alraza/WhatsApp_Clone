@@ -8,7 +8,11 @@ import cors from 'cors';
 dotenv.config();
 const app = express();
 app.use(express.json()); // Parse JSON requests
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // allow cookies
+})); // Enable CORS
 
 app.use('/api', router); // Route to get and send messages
 
