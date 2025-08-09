@@ -14,7 +14,9 @@ export default function App() {
 
   // Fetch conversations
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages`)
+    console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages`, { withCredentials: true })
       .then(res => {
         const data = res.data;
         console.log("API Response:", res.data);
@@ -50,7 +52,7 @@ export default function App() {
       return;
     }
 
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages?wa_id=${selectedWaId}`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/messages?wa_id=${selectedWaId}`, { withCredentials: true })
       .then(res => {
         const msgs = res.data.map(msg => ({
           ...msg,
@@ -77,7 +79,7 @@ export default function App() {
         to: selectedWaId,
         text,
         contactName,
-      });
+      }, { withCredentials: true });
 
       let data = res.data.data;
 
