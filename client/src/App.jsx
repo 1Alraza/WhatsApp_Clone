@@ -154,8 +154,8 @@ export default function App() {
             </h1>
             <div style={{ width: 40 }} /> {/* Empty for spacing */}
           </header>
-
-          <ChatWindow messages={messages} />
+          {/* Chat window and input */}
+          <ChatWindow messages={messages} />  
           <SendMessageInput onSend={handleSendMessage} />
         </main>
       </div>
